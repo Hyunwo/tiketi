@@ -1,0 +1,52 @@
+/**
+ * Constants Index
+ * 모든 상수를 한 곳에서 export
+ */
+
+const { EVENT_STATUS, EVENT_STATUS_DISPLAY, EVENT_STATUS_MESSAGES } = require('./event-status');
+const { SEAT_STATUS, SEAT_STATUS_DISPLAY, SEAT_STATUS_COLORS } = require('./seat-status');
+const { RESERVATION_STATUS, RESERVATION_SETTINGS } = require('./reservation');
+const { PAYMENT_STATUS, PAYMENT_METHODS, PAYMENT_METHOD_DISPLAY, PAYMENT_SETTINGS } = require('./payment');
+const { ERROR_MESSAGES, SUCCESS_MESSAGES } = require('./messages');
+const { 
+  LOCK_SETTINGS, 
+  CACHE_SETTINGS, 
+  PAGINATION_DEFAULTS, 
+  QUEUE_SETTINGS,
+  CACHE_KEYS, 
+  LOCK_KEYS 
+} = require('./settings');
+
+module.exports = {
+  // Event
+  EVENT_STATUS,
+  EVENT_STATUS_DISPLAY,
+  EVENT_STATUS_MESSAGES,
+  
+  // Seat
+  SEAT_STATUS,
+  SEAT_STATUS_DISPLAY,
+  SEAT_STATUS_COLORS,
+  
+  // Reservation
+  RESERVATION_STATUS,
+  RESERVATION_SETTINGS,
+  
+  // Payment
+  PAYMENT_STATUS,
+  PAYMENT_METHODS,
+  PAYMENT_METHOD_DISPLAY,
+  PAYMENT_SETTINGS,
+  
+  // Messages
+  ERROR_MESSAGES,
+  SUCCESS_MESSAGES,
+  
+  // Settings (Backend)
+  LOCK_SETTINGS,
+  CACHE_SETTINGS,
+  PAGINATION_DEFAULTS,
+  QUEUE_SETTINGS,
+  CACHE_KEYS,
+  LOCK_KEYS,
+};

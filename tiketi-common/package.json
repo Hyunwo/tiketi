@@ -1,0 +1,31 @@
+{
+  "name": "@tiketi/common",
+  "version": "1.0.0",
+  "description": "티케티(Tiketi) MSA 공통 라이브러리 - 상수, 유틸리티",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"No tests yet\" && exit 0",
+    "prepublishOnly": "echo 'Ready to publish @tiketi/common'"
+  },
+  "keywords": [
+    "tiketi",
+    "common",
+    "constants",
+    "msa"
+  ],
+  "author": "Tiketi Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/tiketi-common.git"
+  },
+  "dependencies": {
+    "winston": "^3.11.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
+}
