@@ -3,6 +3,7 @@
  * 모든 상수를 한 곳에서 export
  */
 
+const { CONFIG } = require('./config');
 const { EVENT_STATUS, EVENT_STATUS_DISPLAY, EVENT_STATUS_MESSAGES } = require('./event-status');
 const { SEAT_STATUS, SEAT_STATUS_DISPLAY, SEAT_STATUS_COLORS } = require('./seat-status');
 const { RESERVATION_STATUS, RESERVATION_SETTINGS } = require('./reservation');
@@ -18,6 +19,9 @@ const {
 } = require('./settings');
 
 module.exports = {
+  // Config
+  CONFIG,
+  
   // Event
   EVENT_STATUS,
   EVENT_STATUS_DISPLAY,
