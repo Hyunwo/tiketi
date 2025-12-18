@@ -11,7 +11,7 @@ const { logger } = require('@tiketi/common');
 // 설정
 const db = require('./config/database');
 const swaggerSpec = require('./config/swagger');
-const { initAdmin } = require('./config/init-admin');
+const { initializeAdmin } = require('./config/init-admin');
 
 // 미들웨어
 const errorHandler = require('./middleware/error-handler');
@@ -77,7 +77,7 @@ const startServer = async () => {
     logger.info(`[${SERVICE_NAME}] Database connected`);
 
     // 기본 관리자 계정 생성
-    await initAdmin();
+    await initializeAdmin();
 
     app.listen(PORT, () => {
       logger.info(`[${SERVICE_NAME}] Server running on port ${PORT}`);

@@ -22,7 +22,7 @@ const reservationsRoutes = require('./routes/reservations');
 const healthRoutes = require('./routes/health');
 
 // 서비스
-const { startReservationCleaner } = require('./services/reservation-cleaner');
+// const { startReservationCleaner } = require('./services/reservation-cleaner');
 
 const app = express();
 const PORT = process.env.PORT || 3003;
@@ -82,7 +82,7 @@ const startServer = async () => {
     logger.info(`[${SERVICE_NAME}] Database connected`);
 
     // 예약 만료 처리 스케줄러 시작
-    startReservationCleaner();
+    // startReservationCleaner();
 
     app.listen(PORT, () => {
       logger.info(`[${SERVICE_NAME}] Server running on port ${PORT}`);

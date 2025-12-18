@@ -5,7 +5,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../config/database');
-const { authenticateToken, isAdmin } = require('../middleware/auth');
+const { authenticateToken, requireAdmin } = require('../middleware/auth');
 const { logger, CustomError } = require('@tiketi/common');
 
 /**
@@ -20,7 +20,7 @@ const { logger, CustomError } = require('@tiketi/common');
  *       200:
  *         description: 대시보드 통계 데이터
  */
-router.get('/dashboard', authenticateToken, isAdmin, async (req, res, next) => {
+router.get('/dashboard', authenticateToken, requireAdmin, async (req, res, next) => {
   try {
     // 전체 이벤트 수
     const eventsResult = await db.query('SELECT COUNT(*) as count FROM events');
@@ -76,7 +76,7 @@ router.get('/dashboard', authenticateToken, isAdmin, async (req, res, next) => {
  *         schema:
  *           type: integer
  */
-router.get('/events/:eventId', authenticateToken, isAdmin, async (req, res, next) => {
+router.get('/events/:eventId', authenticateToken, requireAdmin, async (req, res, next) => {
   try {
     const { eventId } = req.params;
 
@@ -143,7 +143,7 @@ router.get('/events/:eventId', authenticateToken, isAdmin, async (req, res, next
  *           enum: [daily, weekly, monthly]
  *         default: daily
  */
-router.get('/revenue', authenticateToken, isAdmin, async (req, res, next) => {
+router.get('/revenue', authenticateToken, requireAdmin, async (req, res, next) => {
   try {
     const { period = 'daily' } = req.query;
     
@@ -195,7 +195,7 @@ router.get('/revenue', authenticateToken, isAdmin, async (req, res, next) => {
  *     security:
  *       - bearerAuth: []
  */
-router.get('/users', authenticateToken, isAdmin, async (req, res, next) => {
+router.get('/users', authenticateToken, requireAdmin, async (req, res, next) => {
   try {
     // 전체 사용자
     const totalResult = await db.query('SELECT COUNT(*) as count FROM users');

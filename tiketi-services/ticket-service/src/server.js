@@ -12,7 +12,7 @@ const { logger } = require('@tiketi/common');
 // 설정
 const db = require('./config/database');
 const { client: redisClient } = require('./config/redis');
-const { initSocket } = require('./config/socket');
+const { initializeSocketIO } = require('./config/socket');
 const swaggerSpec = require('./config/swagger');
 const { initSeats } = require('./config/init-seats');
 
@@ -25,12 +25,12 @@ const eventsRoutes = require('./routes/events');
 const seatsRoutes = require('./routes/seats');
 const queueRoutes = require('./routes/queue');
 const ticketsRoutes = require('./routes/tickets');
-const imageRoutes = require('./routes/image');
+// const imageRoutes = require('./routes/image');
 const newsRoutes = require('./routes/news');
 const healthRoutes = require('./routes/health');
 
 // 서비스
-const { startEventStatusUpdater } = require('./services/event-status-updater');
+// // const { startEventStatusUpdater } = require('./services/event-status-updater');
 
 const app = express();
 const server = http.createServer(app);
@@ -38,7 +38,7 @@ const PORT = process.env.PORT || 3002;
 const SERVICE_NAME = 'ticket-service';
 
 // Socket.IO 초기화
-const io = initSocket(server);
+const io = initializeSocketIO(server);
 app.set('io', io);
 
 // 기본 미들웨어
@@ -61,7 +61,7 @@ app.use('/api/events', eventsRoutes);
 app.use('/api/seats', seatsRoutes);
 app.use('/api/queue', queueRoutes);
 app.use('/api/tickets', ticketsRoutes);
-app.use('/api/image', imageRoutes);
+// app.use('/api/image', imageRoutes);
 app.use('/api/news', newsRoutes);
 app.use('/health', healthRoutes);
 
@@ -108,7 +108,8 @@ const startServer = async () => {
     // await initSeats();
 
     // 이벤트 상태 업데이터 시작
-    startEventStatusUpdater();
+    
+    // startEventStatusUpdater() // TODO: 구현 필요;
 
     server.listen(PORT, () => {
       logger.info(`[${SERVICE_NAME}] Server running on port ${PORT}`);

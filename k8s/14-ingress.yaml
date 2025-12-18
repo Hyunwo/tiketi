@@ -1,0 +1,96 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tiketi-ingress
+  namespace: tiketi
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      # Auth Service - /api/auth/*
+      - path: /api/auth(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: auth-service
+            port:
+              number: 3001
+      
+      # Ticket Service - /api/events/*, /api/seats/*
+      - path: /api/events(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: ticket-service
+            port:
+              number: 3002
+      
+      - path: /api/seats(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: ticket-service
+            port:
+              number: 3002
+      
+      # Payment Service - /api/payments/*, /api/reservations/*
+      - path: /api/payments(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: payment-service
+            port:
+              number: 3003
+      
+      - path: /api/reservations(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: payment-service
+            port:
+              number: 3003
+      
+      # Stats Service - /api/stats/*
+      - path: /api/stats(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: stats-service
+            port:
+              number: 3004
+      
+      # Health checks (각 서비스별)
+      - path: /health/auth
+        pathType: Prefix
+        backend:
+          service:
+            name: auth-service
+            port:
+              number: 3001
+      
+      - path: /health/ticket
+        pathType: Prefix
+        backend:
+          service:
+            name: ticket-service
+            port:
+              number: 3002
+      
+      - path: /health/payment
+        pathType: Prefix
+        backend:
+          service:
+            name: payment-service
+            port:
+              number: 3003
+      
+      - path: /health/stats
+        pathType: Prefix
+        backend:
+          service:
+            name: stats-service
+            port:
+              number: 3004
