@@ -22,11 +22,6 @@ const {
 } = require('@tiketi/common');
 const { invalidateCachePatterns, withTransactionAndLock } = require('../utils/transaction-helpers');
 const { CustomError } = require('@tiketi/common');
-const { 
-  seatsReserved, 
-  seatsAvailable ,
-  conversionFunnel
-} = require('../metrics');
 const { validate: isUUID } = require('uuid');
 
 const router = express.Router();

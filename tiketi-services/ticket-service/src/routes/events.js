@@ -8,7 +8,6 @@ const {
 } = require('@tiketi/common');
 const { logger } = require('@tiketi/common');
 const { CustomError } = require('@tiketi/common');
-const { eventViews, conversionFunnel } = require('../metrics');
 const { validate: isUUID } = require('uuid');
 
 const router = express.Router();

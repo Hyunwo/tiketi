@@ -1,6 +1,5 @@
 const { logger, logFormat } = require('@tiketi/common');
 const { CustomError } = require('@tiketi/common');
-const { client } = require('../config/redis');
 
 const errorHandler = (err, req, res, next) => {
 

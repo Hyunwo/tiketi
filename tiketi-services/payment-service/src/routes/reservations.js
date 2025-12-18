@@ -15,11 +15,6 @@ const {
 const { invalidateCache, withTransaction } = require('../utils/transaction-helpers');
 const { logger } = require('@tiketi/common');
 const { CustomError } = require('@tiketi/common');
-const { 
-  reservationsCreated, 
-  reservationsCancelled,
-  conversionFunnel
-} = require('../metrics');
 const { validate: isUUID } = require('uuid');
 
 const router = express.Router();

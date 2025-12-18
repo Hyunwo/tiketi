@@ -2,7 +2,6 @@ const express = require('express');
 const db = require('../config/database');
 const { authenticateToken, requireAdmin } = require('../middleware/auth');
 const { client: redisClient } = require('../config/redis');
-const seatGenerator = require('../services/seat-generator');
 const { logger } = require('@tiketi/common');
 const { CustomError } = require('@tiketi/common');
 const {

@@ -2,7 +2,6 @@ const { client: redisClient } = require('../config/redis');
 
 const { logger } = require('@tiketi/common');
 
-const { queueWaitTime, queueUsers } = require('../metrics');
 /**
  * 대기열 관리 시스템
  *

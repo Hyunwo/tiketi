@@ -9,7 +9,6 @@ const { CustomError } = require('@tiketi/common');
 const { validate: isUUID } = require('uuid');
 
 // 메트릭 import 추가
-const { queueUsers } = require('../metrics');
 
 const ensureValidEventId = (eventId, res) => {
   if (!isUUID(eventId)) {
