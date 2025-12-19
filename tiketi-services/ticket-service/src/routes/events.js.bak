@@ -290,8 +290,8 @@ router.get('/:id', async (req, res, next) => {
     };
 
     // 메트릭 추가: 이벤트 조회
-    // eventViews.labels(id, eventResult.rows[0].title || 'Unknown').inc();
-    // conversionFunnel.labels('view', id).inc();
+    eventViews.labels(id, eventResult.rows[0].title || 'Unknown').inc();
+    conversionFunnel.labels('view', id).inc();
 
     // Cache with TTL from constants
     await redisClient.setEx(cacheKey, CACHE_SETTINGS.EVENT_DETAIL_TTL, JSON.stringify(response));
@@ -299,7 +299,7 @@ router.get('/:id', async (req, res, next) => {
     res.json(response);
   } catch (error) {
     error.status = 500;
-    error.clientMessage = '이벤트 정보를 불러오는데 실패했습니다.';
+    error.message = '이벤트 정보를 불러오는데 실패했습니다.';
     next(error);
   }
 });

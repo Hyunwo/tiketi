@@ -299,7 +299,7 @@ router.get('/:id', async (req, res, next) => {
     res.json(response);
   } catch (error) {
     error.status = 500;
-    error.clientMessage = '이벤트 정보를 불러오는데 실패했습니다.';
+    error.message = '이벤트 정보를 불러오는데 실패했습니다.';
     next(error);
   }
 });

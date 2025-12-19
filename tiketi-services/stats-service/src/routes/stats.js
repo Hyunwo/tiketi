@@ -39,7 +39,7 @@ router.get('/dashboard', authenticateToken, requireAdmin, async (req, res, next)
     
     // 총 매출 (완료된 결제)
     const revenueResult = await db.query(`
-      SELECT COALESCE(SUM(total_price), 0) as total 
+      SELECT COALESCE(SUM(total_amount), 0) as total 
       FROM reservations 
       WHERE status = 'confirmed'
     `);
@@ -108,7 +108,7 @@ router.get('/events/:eventId', authenticateToken, requireAdmin, async (req, res,
         COUNT(*) FILTER (WHERE status = 'confirmed') as confirmed,
         COUNT(*) FILTER (WHERE status = 'pending') as pending,
         COUNT(*) FILTER (WHERE status = 'cancelled') as cancelled,
-        COALESCE(SUM(total_price) FILTER (WHERE status = 'confirmed'), 0) as revenue
+        COALESCE(SUM(total_amount) FILTER (WHERE status = 'confirmed'), 0) as revenue
       FROM reservations 
       WHERE event_id = $1
     `, [eventId]);
@@ -168,7 +168,7 @@ router.get('/revenue', authenticateToken, requireAdmin, async (req, res, next) =
       SELECT 
         TO_CHAR(created_at, $1) as period,
         COUNT(*) as count,
-        COALESCE(SUM(total_price), 0) as revenue
+        COALESCE(SUM(total_amount), 0) as revenue
       FROM reservations 
       WHERE status = 'confirmed'
         AND created_at >= NOW() - INTERVAL '${interval}'

@@ -1,0 +1,91 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"networking.k8s.io/v1","kind":"Ingress","metadata":{"annotations":{},"name":"tiketi-ingress","namespace":"tiketi"},"spec":{"ingressClassName":"nginx","rules":[{"http":{"paths":[{"backend":{"service":{"name":"auth-service","port":{"number":3001}}},"path":"/api/auth","pathType":"Prefix"},{"backend":{"service":{"name":"auth-service","port":{"number":3001}}},"path":"/api-docs","pathType":"Prefix"},{"backend":{"service":{"name":"ticket-service","port":{"number":3002}}},"path":"/api/events","pathType":"Prefix"},{"backend":{"service":{"name":"ticket-service","port":{"number":3002}}},"path":"/api/seats","pathType":"Prefix"},{"backend":{"service":{"name":"ticket-service","port":{"number":3002}}},"path":"/api/tickets","pathType":"Prefix"},{"backend":{"service":{"name":"ticket-service","port":{"number":3002}}},"path":"/api/queue","pathType":"Prefix"},{"backend":{"service":{"name":"payment-service","port":{"number":3003}}},"path":"/api/payments","pathType":"Prefix"},{"backend":{"service":{"name":"payment-service","port":{"number":3003}}},"path":"/api/reservations","pathType":"Prefix"},{"backend":{"service":{"name":"stats-service","port":{"number":3004}}},"path":"/api/stats","pathType":"Prefix"},{"backend":{"service":{"name":"auth-service","port":{"number":3001}}},"path":"/health","pathType":"Prefix"}]}}]}}
+  creationTimestamp: "2025-12-18T07:18:26Z"
+  generation: 7
+  name: tiketi-ingress
+  namespace: tiketi
+  resourceVersion: "38673"
+  uid: 8b566e3d-2d0c-4484-ba70-6201cc7e1110
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - backend:
+          service:
+            name: auth-service
+            port:
+              number: 3001
+        path: /api/auth
+        pathType: Prefix
+      - backend:
+          service:
+            name: auth-service
+            port:
+              number: 3001
+        path: /api-docs
+        pathType: Prefix
+      - backend:
+          service:
+            name: ticket-service
+            port:
+              number: 3002
+        path: /api/events
+        pathType: Prefix
+      - backend:
+          service:
+            name: ticket-service
+            port:
+              number: 3002
+        path: /api/seats
+        pathType: Prefix
+      - backend:
+          service:
+            name: ticket-service
+            port:
+              number: 3002
+        path: /api/tickets
+        pathType: Prefix
+      - backend:
+          service:
+            name: ticket-service
+            port:
+              number: 3002
+        path: /api/queue
+        pathType: Prefix
+      - backend:
+          service:
+            name: payment-service
+            port:
+              number: 3003
+        path: /api/payments
+        pathType: Prefix
+      - backend:
+          service:
+            name: payment-service
+            port:
+              number: 3003
+        path: /api/reservations
+        pathType: Prefix
+      - backend:
+          service:
+            name: stats-service
+            port:
+              number: 3004
+        path: /api/stats
+        pathType: Prefix
+      - backend:
+          service:
+            name: auth-service
+            port:
+              number: 3001
+        path: /health
+        pathType: Prefix
+status:
+  loadBalancer:
+    ingress:
+    - hostname: localhost

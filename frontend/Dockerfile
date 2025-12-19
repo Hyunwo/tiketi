@@ -1,31 +1,31 @@
-# Stage 1: Build React app
 FROM node:18-alpine AS builder
 
 WORKDIR /app
 
+# 의존성 설치
 COPY package*.json ./
-RUN npm ci
+RUN npm install
 
+# 소스 및 환경변수 복사
 COPY . .
+
+# 환경변수 설정
+ENV REACT_APP_API_URL=http://localhost:8080
+
+# 빌드
 RUN npm run build
 
-# Stage 2: Serve with Nginx
-FROM nginx:alpine
+# Production
+FROM node:18-alpine
 
-# Copy built files to Nginx
-COPY --from=builder /app/build /usr/share/nginx/html
+WORKDIR /app
 
-# Nginx config for React Router
-RUN echo 'server { \
-    listen 3000; \
-    location / { \
-        root /usr/share/nginx/html; \
-        index index.html index.htm; \
-        try_files $uri $uri/ /index.html; \
-    } \
-}' > /etc/nginx/conf.d/default.conf
+# serve 설치
+RUN npm install -g serve
+
+# 빌드된 파일 복사
+COPY --from=builder /app/build ./build
 
 EXPOSE 3000
 
-CMD ["nginx", "-g", "daemon off;"]
-
+CMD ["serve", "-s", "build", "-l", "3000"]

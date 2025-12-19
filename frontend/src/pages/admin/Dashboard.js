@@ -19,10 +19,11 @@ function Dashboard() {
     try {
       setLoading(true);
       const response = await adminAPI.getDashboardStats();
-      setStats(response.data.stats);
-      setRecentReservations(response.data.recentReservations);
+      const data = response.data.data || response.data;
+      setStats(data);
+      setRecentReservations(data.recentReservations || []);
     } catch (err) {
-      setError('대시보드 정보를 불러오는데 실패했습니다.');
+      setError("대시보드 정보를 불러오는데 실패했습니다.");
       console.error(err);
     } finally {
       setLoading(false);

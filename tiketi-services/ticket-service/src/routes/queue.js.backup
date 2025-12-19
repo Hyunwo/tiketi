@@ -53,13 +53,13 @@ router.post('/check/:eventId', authenticate, async (req, res, next) => {
 
     const result = await queueManager.checkQueueEntry(eventId, userId);
     
-    // // 메트릭 업데이트 (이벤트 정보 포함)
-    // const queueSize = await queueManager.getQueueSize(eventId);
-    // queueUsers.labels(
-    //   eventId, 
-    //   eventInfo.title || 'Unknown',
-    //   eventInfo.artist || 'Unknown'
-    // ).set(queueSize);
+    // 메트릭 업데이트 (이벤트 정보 포함)
+    const queueSize = await queueManager.getQueueSize(eventId);
+    queueUsers.labels(
+      eventId, 
+      eventInfo.title || 'Unknown',
+      eventInfo.artist || 'Unknown'
+    ).set(queueSize);
     
     res.json(result);
   } catch (error) {

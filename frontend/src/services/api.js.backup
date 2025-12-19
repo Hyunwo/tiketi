@@ -1,0 +1,49 @@
+import axios from 'axios';
+
+// 하드코딩된 API URL (브라우저에서 접근 가능)
+const API_URL = 'http://localhost:8080';
+
+console.log('🔗 API URL:', API_URL); // 디버깅용
+
+const api = axios.create({
+  baseURL: `${API_URL}/api`,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  timeout: 10000,
+});
+
+// 요청 인터셉터
+api.interceptors.request.use(
+  (config) => {
+    console.log('📤 API Request:', config.method.toUpperCase(), config.url); // 디버깅
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    console.error('❌ Request Error:', error);
+    return Promise.reject(error);
+  }
+);
+
+// 응답 인터셉터
+api.interceptors.response.use(
+  (response) => {
+    console.log('�� API Response:', response.config.url, response.status); // 디버깅
+    return response;
+  },
+  (error) => {
+    console.error('❌ API Error:', error.response?.status, error.message);
+    if (error.response?.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
+export default api;

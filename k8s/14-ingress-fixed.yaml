@@ -8,8 +8,8 @@ spec:
   rules:
   - http:
       paths:
-      # Auth Service (가장 먼저)
-      - path: /api/auth
+      # Health checks (모든 서비스에서 사용)
+      - path: /health
         pathType: Prefix
         backend:
           service:
@@ -17,7 +17,7 @@ spec:
             port:
               number: 3001
       
-      # API Docs
+      # API Docs (Auth Service)
       - path: /api-docs
         pathType: Prefix
         backend:
@@ -26,7 +26,16 @@ spec:
             port:
               number: 3001
       
-      # Ticket Service
+      # Auth Service
+      - path: /api/auth
+        pathType: Prefix
+        backend:
+          service:
+            name: auth-service
+            port:
+              number: 3001
+      
+      # Ticket Service (가장 많은 경로를 가진 서비스)
       - path: /api/events
         pathType: Prefix
         backend:
@@ -52,6 +61,14 @@ spec:
               number: 3002
       
       - path: /api/queue
+        pathType: Prefix
+        backend:
+          service:
+            name: ticket-service
+            port:
+              number: 3002
+      
+      - path: /api/news
         pathType: Prefix
         backend:
           service:
@@ -85,11 +102,10 @@ spec:
             port:
               number: 3004
       
-      # Health
-      - path: /health
+      - path: /api/admin
         pathType: Prefix
         backend:
           service:
-            name: auth-service
+            name: stats-service
             port:
-              number: 3001
+              number: 3004

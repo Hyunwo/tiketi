@@ -270,7 +270,7 @@ router.get('/:id', async (req, res, next) => {
       [id]
     );
 
-    if (eventResult.rows.length === 0) {
+    if (result.rows.length === 0) {
       return res.status(404).json({ error: '이벤트를 찾을 수 없습니다.' });
     }
 
@@ -285,13 +285,13 @@ router.get('/:id', async (req, res, next) => {
     );
 
     const response = {
-      event: eventResult.rows[0],
+      event: result.rows[0],
       ticketTypes: ticketTypesResult.rows,
     };
 
     // 메트릭 추가: 이벤트 조회
-    // eventViews.labels(id, eventResult.rows[0].title || 'Unknown').inc();
-    // conversionFunnel.labels('view', id).inc();
+    eventViews.labels(id, result.rows[0].title || 'Unknown').inc();
+    conversionFunnel.labels('view', id).inc();
 
     // Cache with TTL from constants
     await redisClient.setEx(cacheKey, CACHE_SETTINGS.EVENT_DETAIL_TTL, JSON.stringify(response));
@@ -299,7 +299,7 @@ router.get('/:id', async (req, res, next) => {
     res.json(response);
   } catch (error) {
     error.status = 500;
-    error.clientMessage = '이벤트 정보를 불러오는데 실패했습니다.';
+    error.message = '이벤트 정보를 불러오는데 실패했습니다.';
     next(error);
   }
 });
